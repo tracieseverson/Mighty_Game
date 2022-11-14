@@ -17,11 +17,39 @@ screen_rect = screen.get_rect()
 rows = screen_rect.height//tile_size #rounds the result to the nearest whole number
 cols = screen_rect.width//tile_size
 
-print(rows)
-print(cols)
+#print(rows)
+#print(cols)
+#draw the water
 for x in range(rows):
     for y in range(cols):
         screen.blit(water_image, (x*water_rect.height, y*water_rect.width))
+
+#add an island
+#load all the island images
+island_bottom_left = pygame.image.load('images/island_bottom_left.png')
+island_bottom_mid = pygame.image.load('images/island_bottom_mid.png')
+island_bottom_right = pygame.image.load('images/island_bottom_right.png')
+island_top_left = pygame.image.load('images/island_top_left.png')
+island_top_mid = pygame.image.load('images/island_top_mid.png')
+island_top_right = pygame.image.load('images/island_top_right.png')
+
+#blit them to the screen
+#screen.blit(island_top_left, (tile_size, 0))
+#screen.blit(island_top_mid, (tile_size*2, 0))
+#screen.blit(island_top_right, (tile_size*3, 0))
+#screen.blit(island_bottom_left, (tile_size, tile_size))
+#screen.blit(island_bottom_mid, (tile_size*2, tile_size))
+#screen.blit(island_bottom_right, (tile_size*3, tile_size))
+
+#what if I wanted it in the center of my screen?
+screen_rect = screen.get_rect()
+print(screen_rect.center)
+screen.blit(island_top_left, (screen_rect.centerx - 2*tile_size, screen_rect.centery - tile_size))
+screen.blit(island_top_mid, (screen_rect.centerx-tile_size, screen_rect.centery - tile_size))
+screen.blit(island_top_right, (screen_rect.centerx, screen_rect.centery - tile_size))
+screen.blit(island_bottom_left, (screen_rect.centerx - 2*tile_size, screen_rect.centery))
+screen.blit(island_bottom_mid, (screen_rect.centerx-tile_size, screen_rect.centery))
+screen.blit(island_bottom_right, (screen_rect.centerx, screen_rect.centery))
 
 while True:
     #print("----------check for new events____________")
