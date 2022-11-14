@@ -11,6 +11,7 @@ screen.fill((0, 0, 255))
 while True:
     print("----------check for new events____________")
     recent_events = pygame.event.get()
+    print(recent_events)
     print("----------done checking for events--------")
     for event in recent_events:
         if event.type == pygame.QUIT:
