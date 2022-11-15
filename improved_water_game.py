@@ -1,6 +1,7 @@
 import pygame
 import sys
 from ship import Ship
+from island import Island
 
 pygame.init()
 
@@ -11,13 +12,11 @@ screen = pygame.display.set_mode((10*tile_size, 10*tile_size))
 pygame.display.set_caption("This is my really cool game")
 screen.fill((0, 0, 0))
 
+boom = pygame.mixer.Sound('boom.mp3')
+
 #load my island images
-top_left = pygame.image.load('images/top_left.png')
-top_mid = pygame.image.load('images/top_mid.png')
-top_right = pygame.image.load('images/top_right.png')
-bottom_left = pygame.image.load('images/bottom_left.png')
-bottom_mid = pygame.image.load('images/bottom_mid.png')
-bottom_right = pygame.image.load('images/bottom_right.png')
+island = Island()
+island.move((320, 320))
 
 #add a ship
 my_ship = Ship() #ship is now an object that *has* a surface
@@ -34,16 +33,10 @@ def draw_background():
         for y in range(cols):
             screen.blit(water_image, (x*water_rect.height, y*water_rect.width))
 
-    #draw my island in my ocean
-    screen.blit(top_left, (screen_rect.centerx - 2*tile_size, screen_rect.centery - tile_size))
-    screen.blit(top_mid, (screen_rect.centerx - tile_size, screen_rect.centery - tile_size))
-    screen.blit(top_right, (screen_rect.centerx, screen_rect.centery - tile_size ))
-    screen.blit(bottom_left, (screen_rect.centerx - 2*tile_size, screen_rect.centery))
-    screen.blit(bottom_mid, (screen_rect.centerx - tile_size, screen_rect.centery))
-    screen.blit(bottom_right, (screen_rect.centerx, screen_rect.centery))
 
 coordinate = (0, 0)
 
+clock = pygame.time.Clock()
 while True:
     recent_events = pygame.event.get()
     for event in recent_events:
@@ -55,9 +48,18 @@ while True:
 
     #update the ship
     my_ship.move(coordinate)
+    #determine collisions
+    collision = pygame.sprite.collide_rect(my_ship, island)
+    if collision:
+        print(f"You just ran into the Island!: Your ship health is {my_ship.health}")
+        pygame.mixer.Sound.play(boom)
+        my_ship.health = my_ship.health - 1
 
     # draw the screen
     draw_background()
+    # draw my island in my ocean
+    island.draw(screen)
     my_ship.draw(screen)
     #screen.blit(my_ship.image, my_ship.rect)
     pygame.display.flip()
+    clock.tick(60)
