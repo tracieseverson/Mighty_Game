@@ -1,5 +1,6 @@
 import pygame
 import sys
+from ship import Ship
 
 pygame.init()
 
@@ -17,6 +18,9 @@ top_right = pygame.image.load('images/top_right.png')
 bottom_left = pygame.image.load('images/bottom_left.png')
 bottom_mid = pygame.image.load('images/bottom_mid.png')
 bottom_right = pygame.image.load('images/bottom_right.png')
+
+#add a ship
+my_ship = Ship() #ship is now an object that *has* a surface
 
 #get screen rect parameters
 screen_rect = screen.get_rect()
@@ -38,23 +42,22 @@ def draw_background():
     screen.blit(bottom_mid, (screen_rect.centerx - tile_size, screen_rect.centery))
     screen.blit(bottom_right, (screen_rect.centerx, screen_rect.centery))
 
-#add a ship
-my_ship = pygame.image.load('images/my_ship.png')
-#screen.blit(my_ship, (320, 320))
+coordinate = (0, 0)
 
 while True:
-    #print("----------check for new events____________")
     recent_events = pygame.event.get()
-    #print("----------done checking for events--------")
     for event in recent_events:
         if event.type == pygame.MOUSEMOTION:
             coordinate = pygame.mouse.get_pos()
         if event.type == pygame.QUIT:
-            #print("Ha Ha I will never quit")
             pygame.quit()
             sys.exit()
 
-    #draw the screen
+    #update the ship
+    my_ship.move(coordinate)
+
+    # draw the screen
     draw_background()
-    screen.blit(my_ship, coordinate)
+    my_ship.draw(screen)
+    #screen.blit(my_ship.image, my_ship.rect)
     pygame.display.flip()
