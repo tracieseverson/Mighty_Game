@@ -49,12 +49,14 @@ while True:
     for event in recent_events:
         if event.type == pygame.MOUSEMOTION:
             coordinate = pygame.mouse.get_pos()
+            draw_background()
+            screen.blit(my_ship, coordinate)
         if event.type == pygame.QUIT:
             #print("Ha Ha I will never quit")
             pygame.quit()
             sys.exit()
 
     #draw the screen
-    draw_background()
-    screen.blit(my_ship, coordinate)
+    #draw_background()
+    #screen.blit(my_ship, coordinate)
     pygame.display.flip()
