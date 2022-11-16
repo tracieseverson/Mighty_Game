@@ -1,10 +1,9 @@
 import pygame
 
 class Island:
-    #create a constructor
-
+    #create island constructor
     def __init__(self):
-        self.image = pygame.image.load('images/bottom_left.png')
+        self.image = pygame.image.load('images/top_left.png')
         self.rect = self.image.get_rect()
 
     def move(self, coordinate):
