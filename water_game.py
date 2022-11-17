@@ -14,7 +14,7 @@ screen.fill((0, 0, 0))
 
 #load my island images
 island = Island()
-island.move((320, 320))
+#island.move((320, 320))
 
 #add a ship
 my_ship = Ship() #ship is now an instance (object) of the Ship class
@@ -48,6 +48,7 @@ while True:
     #draw the screen
     draw_background()
     island.draw(screen)
+    #update my ship
     my_ship.move(coordinate)
     ship_rect = my_ship.rect
     screen.blit(my_ship.image, ship_rect)
