@@ -5,6 +5,8 @@ from island import Island
 
 pygame.init()
 
+clock = pygame.time.Clock()
+
 water_image = pygame.image.load('images/water_image.png')
 water_rect = water_image.get_rect()
 tile_size = water_rect.width
@@ -18,6 +20,9 @@ island = Island()
 
 #add a ship
 my_ship = Ship() #ship is now an instance (object) of the Ship class
+
+#add a boom sound
+boom = pygame.mixer.Sound('explosion-01.mp3')
 
 #get screen rect parameters
 screen_rect = screen.get_rect()
@@ -36,6 +41,7 @@ def draw_background():
 
 pygame.mouse.set_visible(False)
 
+
 while True:
     recent_events = pygame.event.get()
     for event in recent_events:
@@ -48,8 +54,18 @@ while True:
     #draw the screen
     draw_background()
     island.draw(screen)
+    island.move((320, 320))
     #update my ship
     my_ship.move(coordinate)
+
+    #check collisions
+    collision = pygame. sprite.collide_rect(my_ship, island)
+    if collision:
+        print(f"You just ran into the island dummy!  Now your health is {my_ship.health}")
+        pygame.mixer.Sound.play(boom)
+        my_ship.health -= 1
     ship_rect = my_ship.rect
+    my_ship.draw(screen)
     screen.blit(my_ship.image, ship_rect)
     pygame.display.flip()
+    clock.tick(60)
