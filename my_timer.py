@@ -1,35 +1,32 @@
-import pygame as pg
+import pygame
 
+pygame.init()
 
-def main():
-    pg.init()
-    screen = pg.display.set_mode((640, 480))
-    font = pg.font.Font(None, 40)
-    gray = pg.Color('gray19')
-    blue = pg.Color('dodgerblue')
-    # The clock is used to limit the frame rate
-    # and returns the time since last tick.
-    clock = pg.time.Clock()
-    timer = 10  # Decrease this to count down.
-    dt = 0  # Delta time (time since last tick).
+screen = pygame.display.set_mode((640, 480))
+screen.fill((0, 0, 0))
+font = pygame.font.Font(None, 40)
+blue = pygame.Color('dodgerblue')
 
-    done = False
-    while not done:
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                done = True
+# The clock is used to limit the frame rate
+# and returns the time since last tick.
+clock = pygame.time.Clock()
+timer = 10  # Decrease this to count down.
+dt = 0  # Delta time (time since last tick).
 
-        timer -= dt
-        if timer <= 0:
-            timer = 10  # Reset it to 10 or do something else.
+done = False
+while not done:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
 
-        screen.fill(gray)
+    timer -= dt
+    if timer <= 0:
+        txt = font.render('Game Over!', True, blue)
+        #timer = 10  # Reset it to 10 or do something else.
+    else:
         txt = font.render(str(round(timer, 2)), True, blue)
-        screen.blit(txt, (70, 70))
-        pg.display.flip()
-        dt = clock.tick(30) / 1000  # / 1000 to convert to seconds.
 
-
-if __name__ == '__main__':
-    main()
-    pg.quit()
+    screen.fill((0, 0, 0))
+    screen.blit(txt, (70, 70))
+    pygame.display.flip()
+    dt = clock.tick(30) / 1000  # / 1000 to convert to seconds.

@@ -59,7 +59,7 @@ while True:
     my_ship.move(coordinate)
 
     #check collisions
-    collision = pygame. sprite.collide_rect(my_ship, island)
+    collision = pygame.sprite.collide_rect(my_ship, island)
     if collision:
         print(f"You just ran into the island dummy!  Now your health is {my_ship.health}")
         pygame.mixer.Sound.play(boom)
